@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
 const handlebars = require('express-handlebars')
-const Sequelize = require('sequelize');
+
+
+app.use(express.urlencoded())
+app.use(express.json());
 
 
 // configurando a template engine
@@ -9,11 +12,6 @@ const Sequelize = require('sequelize');
 app.engine('handlebars', handlebars({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 
-// conexão com banco de dados
-const sequelize = new Sequelize('teste', 'root', 'pazeamor',{
-    host: 'localhost',
-    dialect: 'mysql'
-})
 
 // ROTAS
 
@@ -21,8 +19,8 @@ const sequelize = new Sequelize('teste', 'root', 'pazeamor',{
         res.render('formularios')
     })
  
-    app.post('/add', function(rec,res){
-        res.send('formulario recebido')
+    app.post('/add', function(req,res){
+                res.send('Texto: '+req.body.titulo+' Conteudo: '+req.body.conteudo)
     })
 
 app.listen(8081, function(){
